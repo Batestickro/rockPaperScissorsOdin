@@ -8,35 +8,38 @@ function getComputerChoice() {
 
 // compare both choices and determine a winner.
 function playRound(playerSelection, computerSelection) {
+    let win = `You win! ${playerSelection.charAt(0).toUpperCase()}${playerSelection.slice(1)} beats ${computerSelection}`
+    let lose = `You lost! ${computerSelection.charAt(0).toUpperCase()}${computerSelection.slice(1)} beats ${playerSelection}`
+    let tie = "It is a tie"
     switch (playerSelection) {
         case computerSelection:
-            return "It is a tie"
+            return tie
             break
         case "rock":
             switch (computerSelection) {
                 case "paper":
-                    return "You lost! Rock is beaten by paper."
+                    return lose
                     break
                 case "scissors":
-                    return "You win! Rock beats scissors."
+                    return  win
                     break
             }
         case "paper":
             switch (computerSelection) {
                 case "scissors":
-                    return "You lost! Paper is beaten by scissors."
+                    return lose
                     break
                 case "rock":
-                    return "You win! Paper beats rock."
+                    return win
                     break
             }
         case "scissors":
             switch (computerSelection) {
                 case "rock":
-                    return "You lost! Scissors is beaten by rock"
+                    return lose 
                     break
                 case "paper":
-                    return "You win! Scissors beats paper"
+                    return win
                     break
             }
     }
