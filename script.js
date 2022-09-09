@@ -1,5 +1,5 @@
 
-// Make the computer select randomly one choice
+// Make the computee select randomly one choice
 function getComputerChoice() {
     let choices = ["rock", "paper", "scissors"] 
     let choice = choices[Math.floor(Math.random() * 3)]
@@ -11,8 +11,8 @@ function getComputerChoice() {
 
 // compare both choices and determine a winner.
 function playRound(playerSelection, computerSelection) {
-    let win = `You win! ${playerSelection.charAt(0).toUpperCase()}${playerSelection.slice(1)} beats ${computerSelection}`
-    let lose = `You lost! ${computerSelection.charAt(0).toUpperCase()}${computerSelection.slice(1)} beats ${playerSelection}`
+    let win = `You win! ${playerSelection} beats ${computerSelection}`
+    let lose = `You lost! ${computerSelection} beats ${playerSelection}`
     let tie = "It is a tie"
 
    //compare the user choice with the random choices, base on that will output one of the variables declared. 
@@ -20,7 +20,7 @@ function playRound(playerSelection, computerSelection) {
 
         //first check if both are the same and declare a tie 
         case computerSelection:
-            console.log(tie)
+            results.textContent = tie
 
         //with every comparison return a message to use later to determine scores and winner.
             return "tie"
@@ -31,33 +31,33 @@ function playRound(playerSelection, computerSelection) {
         case "rock":
             switch (computerSelection) {
                 case "paper":
-                    console.log(lose) 
+                    results.textContent = lose
                     return "loser"
                     break
                 case "scissors":
-                    console.log(win)
+                    results.textContent = win
                     return "winner" 
                     break
             }
         case "paper":
             switch (computerSelection) {
                 case "scissors":
-                    console.log(lose)
+                    results.textContent = lose
                     return "loser"
                     break
                 case "rock":
-                    console.log(win)
+                    results.textContent = win
                     return "winner"
                     break
             }
         case "scissors":
             switch (computerSelection) {
                 case "rock":
-                    console.log(lose)
+                    results.textContent = lose
                     return "loser" 
                     break
                 case "paper":
-                    console.log(win)
+                    results.textContent = win
                     return "winner"
                     break
             }
@@ -66,37 +66,41 @@ function playRound(playerSelection, computerSelection) {
 
 
 
-//Allow different rounds, keep scores and display winner at the end.
-function game() {
-    let computerScore = 0
-    let userScore = 0
-    for (let i = 0; i < 5; i++) {
 
-        // the prompt will show up every time the loop runs.
-        let player = prompt("What is your bet, Rock, Paper or Scissors?").toLowerCase()
-        let round = playRound(player, getComputerChoice())
-
-        //Based on the computerchoice function's return will store score for both
-        if (round == "loser") {
-            computerScore += 1
-        } else if (round == "winner") {
-            userScore += 1
-        }
-        console.log(`Machine score: ${computerScore}`)
-        console.log(`Your score: ${userScore}`)
+function clickHandler(){
+    let round = playRound(this.innerText.toLowerCase(), getComputerChoice())
+    //Based on the computerchoice function's return will store score for both
+    if (round == "loser") {
+        computerScore += 1
+    } else if (round == "winner") {
+        userScore += 1
     }
+    computer.textContent = `Machine score: ${computerScore}`
+    user.textContent = `Your score: ${userScore}`
 
-    //Compare scores and determine who will be the winner
-    if (userScore > computerScore) {
-        return "Congratulations! You beat the machine"
-    } else if (userScore < computerScore){
-        return "You lost but let's go for revenge"
-    } else {
-        return "It is a tie"
+    if(computerScore > 4 || userScore > 4) {
+        buttons.forEach(button => button.removeEventListener('click', clickHandler))
+        if (userScore > computerScore) {
+           results.textContent = "congratulations! you beat the machine"
+        } else if (userScore < computerScore){
+            results.textContent = "This time you lose but let's go for revenge!"
+        } else {
+            results.textContent = "It is a tie"
+        }
     }
 }
 
 
 
 
-console.log(game())
+let computerScore = 0
+let userScore = 0
+
+// Set the selectors to manipulate the DOM and show scores and results while playing.
+const results = document.querySelector(".results")
+const computer = document.querySelector('.computer')
+const user = document.querySelector('.user')
+const buttons = document.querySelectorAll('button')
+
+// loop through each button, when a button is clicked, will be called the PlayRound function and then show scores.
+buttons.forEach(button => button.addEventListener('click', clickHandler))
