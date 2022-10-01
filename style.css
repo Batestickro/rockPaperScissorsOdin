@@ -59,6 +59,7 @@ body {
     left: -45px;
 }
 
+
 .buttons {
     display: flex;
     gap: 50px;
@@ -69,17 +70,33 @@ body {
     color: white;
     border: none;
     outline: none;
-    font-size: 60px;
+    font-size: 90px;
+    cursor: grab;
 }
 
-.rock:active {
+.rock:active, .paper:active, .scissors:active {
     font-size: 100px;
+    cursor: grabbing;
 }
 
-.paper:active {
-    font-size: 100px;
+.try-again-btn {
+    background-image: linear-gradient(#E2584D, #f99c9c);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 21px;
+    cursor: pointer;
+    display: none;
 }
 
-.scissors:active {
-    font-size: 100px;
+/* ---javaScript Styles */
+.results {
+    color: #fff;
+    font-size: 25px;
+}
+
+.try-again-btn {
+    display: block;
 }

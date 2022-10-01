@@ -1,10 +1,20 @@
-// Make the computee select randomly one choice
+// Variables and selectors to manipulate the DOM, show scores, results and restart the game.
+let computerScore
+let userScore
+let tryAgainBtn 
+const results = document.querySelector(".results")
+const computer = document.querySelector('.computer')
+const user = document.querySelector('.user')
+const buttons = document.querySelectorAll('button')
+const content = document.querySelector(".content")
+
+
+// Make the computer select randomly one choice
 function getComputerChoice() {
     let choices = ["rock", "paper", "scissors"] 
     let choice = choices[Math.floor(Math.random() * 3)]
     return choice
 }
-
 
 
 // compare both choices and determine a winner.
@@ -63,10 +73,9 @@ function playRound(playerSelection, computerSelection) {
 }
 
 
-
-function clickHandler(){
+function roundResult(){
     let round = playRound(this.className, getComputerChoice())
-    //Based on the computerchoice function's return will store score for both
+    //Based on the computerchoice function's return will store score for both.
     if (round == "loser") {
         computerScore += 1
     } else if (round == "winner") {
@@ -75,27 +84,41 @@ function clickHandler(){
     computer.textContent = `${computerScore}`
     user.textContent = `${userScore}`
 
+    //Determine a winner.
     if(computerScore > 4 || userScore > 4) {
-        buttons.forEach(button => button.removeEventListener('click', clickHandler))
+        buttons.forEach(button => button.removeEventListener('click', roundResult))
         if (userScore > computerScore) {
            results.textContent = "Congratulations! you beat the machine"
         } else if (userScore < computerScore){
             results.textContent = "This time you lose but let's go for revenge!"
         } 
+
+        //Button to restart the game
+        tryAgainBtn = document.createElement("button")
+        tryAgainBtn.classList.add("try-again-btn")
+        tryAgainBtn.textContent = `Try Again`
+        content.appendChild(tryAgainBtn)
+        tryAgainBtn.addEventListener("click", startGame)
     }
 }
 
 
+//Start game from scratch
+function startGame() {
+    computerScore = 0
+    userScore = 0
+    computer.textContent = `${computerScore}`
+    user.textContent = `${userScore}`
+    results.textContent = ""
 
-let computerScore = 0
-let userScore = 0
+    // loop through each button, when a button is clicked, will be called the PlayRound function and show scores.
+    buttons.forEach(button => button.addEventListener('click', roundResult))
 
-// Set the selectors to manipulate the DOM and show scores and results while playing.
-const results = document.querySelector(".results")
-results.style.color = 'white'
-const computer = document.querySelector('.computer')
-const user = document.querySelector('.user')
-const buttons = document.querySelectorAll('button')
+    if(!!document.querySelector(".try-again-btn")) {
+        content.removeChild(tryAgainBtn)
+    }
 
-// loop through each button, when a button is clicked, will be called the PlayRound function and then show scores.
-buttons.forEach(button => button.addEventListener('click', clickHandler))
+}
+
+
+startGame()
