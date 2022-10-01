@@ -1,11 +1,9 @@
-
 // Make the computee select randomly one choice
 function getComputerChoice() {
     let choices = ["rock", "paper", "scissors"] 
     let choice = choices[Math.floor(Math.random() * 3)]
     return choice
 }
-
 
 
 
@@ -66,30 +64,26 @@ function playRound(playerSelection, computerSelection) {
 
 
 
-
 function clickHandler(){
-    let round = playRound(this.innerText.toLowerCase(), getComputerChoice())
+    let round = playRound(this.className, getComputerChoice())
     //Based on the computerchoice function's return will store score for both
     if (round == "loser") {
         computerScore += 1
     } else if (round == "winner") {
         userScore += 1
     }
-    computer.textContent = `Machine score: ${computerScore}`
-    user.textContent = `Your score: ${userScore}`
+    computer.textContent = `${computerScore}`
+    user.textContent = `${userScore}`
 
     if(computerScore > 4 || userScore > 4) {
         buttons.forEach(button => button.removeEventListener('click', clickHandler))
         if (userScore > computerScore) {
-           results.textContent = "congratulations! you beat the machine"
+           results.textContent = "Congratulations! you beat the machine"
         } else if (userScore < computerScore){
             results.textContent = "This time you lose but let's go for revenge!"
-        } else {
-            results.textContent = "It is a tie"
-        }
+        } 
     }
 }
-
 
 
 
@@ -98,6 +92,7 @@ let userScore = 0
 
 // Set the selectors to manipulate the DOM and show scores and results while playing.
 const results = document.querySelector(".results")
+results.style.color = 'white'
 const computer = document.querySelector('.computer')
 const user = document.querySelector('.user')
 const buttons = document.querySelectorAll('button')
